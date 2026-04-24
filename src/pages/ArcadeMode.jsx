@@ -9,12 +9,18 @@ import { bodyArchitectureCurriculum } from '../data/bodyArchitecture/curriculum'
 import { useProgress } from '../state/ProgressContext'
 import { buildMissionResult } from '../utils/progress'
 
+const assetUrl = (path) => `${import.meta.env.BASE_URL}${path}`
+
 const ZOMBIE_IMAGES = [
-  '/assets/arcade/z-1.png',
-  '/assets/arcade/z-2.png',
-  '/assets/arcade/z-3.png',
-  '/assets/arcade/z-4.png',
+  assetUrl('assets/arcade/z-1.png'),
+  assetUrl('assets/arcade/z-2.png'),
+  assetUrl('assets/arcade/z-3.png'),
+  assetUrl('assets/arcade/z-4.png'),
 ]
+
+const ARCADE_ARENA_STYLE = {
+  '--arcade-bg-image': `url("${assetUrl('assets/arcade/bg-arena.jpg')}")`,
+}
 
 const WAVE_SECONDS = 10
 
@@ -208,7 +214,11 @@ export default function ArcadeMode() {
                 <h2 className="line-clamp-2 text-base font-semibold leading-snug text-white md:text-lg">{question.arcadePrompt}</h2>
               </section>
 
-              <div className={`arcade-arena ${feedback ? 'arcade-paused' : ''} ${feedback && !feedback.isCorrect ? 'arcade-screen-shake' : ''} ${timer < 5 && !feedback ? 'arcade-urgent' : ''}`} onMouseMove={updateCrosshair}>
+              <div
+                className={`arcade-arena ${feedback ? 'arcade-paused' : ''} ${feedback && !feedback.isCorrect ? 'arcade-screen-shake' : ''} ${timer < 5 && !feedback ? 'arcade-urgent' : ''}`}
+                style={ARCADE_ARENA_STYLE}
+                onMouseMove={updateCrosshair}
+              >
                 <div className="floor-perspective" />
                 <div className="arcade-crosshair" style={{ left: crosshair.x, top: crosshair.y }} />
                 <AnimatePresence>
